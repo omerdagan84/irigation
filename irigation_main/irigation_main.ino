@@ -12,8 +12,6 @@ int value = 0;
 int temp;
 bool status = false;
 
-
-
 void setup() {
   Serial.begin(115200);
   
@@ -32,7 +30,7 @@ void loop() {
     digitalWrite(BUILTIN_LED, HIGH);
   }
   status = !status;
-/*
+
   if (!client.connected()) {
     reconnect();
   }
@@ -47,7 +45,7 @@ void loop() {
     Serial.println(msg);
     client.publish("test", msg);
   }
-  */
+  /*
   sRead = read_humidity(S_PWR_A);
   if (sRead > SENSE_A_THR)
     pump_seq(PUMPA, 5);
@@ -63,5 +61,5 @@ void loop() {
   sRead = read_humidity(S_PWR_D);
   if (sRead > SENSE_D_THR)
     pump_seq(PUMPD, 5);
-
+*/
 }

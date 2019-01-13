@@ -16,6 +16,7 @@
 const char* ssid = "dagan";
 const char* password = "dagan123";
 const char* mqtt_server = "192.168.1.102";
+const char* dev_name = "ir1";
 
 int SENSE_A_THR = 700;
 int SENSE_B_THR = 700;

@@ -29,9 +29,11 @@ void reconnect() {
     if (client.connect("ESP8266Client")) {
       Serial.println("connected");
       // Once connected, publish an announcement...
-      client.publish("test", "hello world");
+      client.publish(dev_name, "hello world");
       // ... and resubscribe
-      client.subscribe("test");
+      char topic[128];
+      snprintf(topic, sizeof(topic), "%s/#", dev_name);
+      client.subscribe(topic);
     } else {
       Serial.print("failed, rc=");
       Serial.print(client.state());
@@ -51,6 +53,7 @@ void mqtt_callback(char* topic, byte* payload, unsigned int length) {
   }
   Serial.println();
 
+  /*
   // Switch on the LED if an 1 was received as first character
   if ((char)payload[0] == '1') {
     digitalWrite(BUILTIN_LED, LOW);   // Turn the LED on (Note that LOW is the voltage level
@@ -59,5 +62,6 @@ void mqtt_callback(char* topic, byte* payload, unsigned int length) {
   } else {
     digitalWrite(BUILTIN_LED, HIGH);  // Turn the LED off by making the voltage HIGH
   }
+  */
 
 }
