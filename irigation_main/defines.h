@@ -29,4 +29,16 @@ void pump_seq(int pump, int sDuration);
 int read_humidity(int sensor_pwr);
 void setup_wifi();
 void reconnect();
+void send_msg(char *msg);
+void irigate();
+void check_connection();
+
+enum t_state {
+  WAIT,
+  IR_START,
+  IR_SEQ,
+  IR_END  
+};
+enum t_state state = WAIT;
+
 #endif

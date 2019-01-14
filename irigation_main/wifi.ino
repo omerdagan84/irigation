@@ -44,9 +44,16 @@ void reconnect() {
   }
 }
 
+void send_msg(char *msg) {
+      char topic[128];
+      snprintf(topic, sizeof(topic), "%s/#", dev_name);
+      client.publish(dev_name, msg);
+}
+
 void mqtt_callback(char* topic, byte* payload, unsigned int length) {
+  String sTopic = String(topic);
   Serial.print("Message arrived [");
-  Serial.print(topic);
+  Serial.print(sTopic);
   Serial.print("] ");
   for (int i = 0; i < length; i++) {
     Serial.print((char)payload[i]);
@@ -64,4 +71,11 @@ void mqtt_callback(char* topic, byte* payload, unsigned int length) {
   }
   */
 
+}
+
+void check_connection() {
+  if (!client.connected()) {
+    reconnect();
+  }
+  client.loop();
 }
