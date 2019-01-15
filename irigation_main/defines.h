@@ -2,6 +2,8 @@
 #define _DEFINES_
 #include <ESP8266WiFi.h>
 #include <PubSubClient.h>
+#include <timer.h>
+
 
 #define PUMPA D8
 #define PUMPB D7
@@ -16,7 +18,7 @@
 const char* ssid = "dagan";
 const char* password = "dagan123";
 const char* mqtt_server = "192.168.1.102";
-const char* dev_name = "ir1";
+const char* dev_name = "irg1";
 
 int SENSE_A_THR = 700;
 int SENSE_B_THR = 700;

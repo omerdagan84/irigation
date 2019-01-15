@@ -11,22 +11,42 @@ char msg[50];
 int value = 0;
 int temp;
 bool status = false;
+auto timer = timer_create_default(); // create a timer with default settings
+
+bool toggle_led(void *) {
+  digitalWrite(LED_BUILTIN, !digitalRead(LED_BUILTIN)); // toggle the LED
+  return true; // keep timer active? true
+}
+
+long minutes = 0;
+bool check_status (void *)
+{
+  minutes++;
+  if (minutes == (60 * 24))
+    minutes = 0;
+  
+  Serial.print("checking system status after (");
+  Serial.print(minutes);
+  Serial.println(") minutes from reset");
+
+  return true;
+}
 
 void setup() {
   Serial.begin(115200);
   
   setup_pump_and_sensor();
   setup_wifi();
+  timer.every(500, toggle_led);  
+  timer.every(60 * 1000, check_status);  
   
   client.setServer(mqtt_server, 1883);
   client.setCallback(mqtt_callback);
 }
 
 void loop() {
-  digitalWrite(BUILTIN_LED,!(digitalRead(BUILTIN_LED)));
-  delay(500);
-
-
+  timer.tick();
+  check_connection();
 
   long now = millis();
   if (now - lastMsg > 2000) {
@@ -42,8 +62,11 @@ void loop() {
     case WAIT:
       break;
     case IR_START:
+      irigate();
+      break;
     case IR_SEQ:
+      break;
     case IR_END:
-    irigate();
+      break;
   }
 }
