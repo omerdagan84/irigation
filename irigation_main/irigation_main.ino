@@ -18,7 +18,7 @@ bool toggle_led(void *) {
   return true; // keep timer active? true
 }
 
-long minutes = 0;
+
 bool check_status (void *)
 {
   minutes++;

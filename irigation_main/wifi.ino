@@ -52,10 +52,10 @@ void send_msg(char *msg) {
 
 void mqtt_callback(char* topic, byte* payload, unsigned int length) {
   //String sTopic = String(topic);
-  char * msg = (char *)malloc((length + 1) * sizeof(char));//String((char *) payload);
+  char * msg = (char *)malloc((length + 1) * sizeof(char));
   strncpy(msg, (char *)payload, length);
   msg[length] = '\0';
-  char *p, *i;
+  char *p1, *p2, *p3, *i;
   
   Serial.print("Message arrived [");
   Serial.print(topic);
@@ -65,34 +65,31 @@ void mqtt_callback(char* topic, byte* payload, unsigned int length) {
   
   if (strstr(topic, "STATUS")) {
     Serial.println("recived a STATUS message");
-    // call status handlin
+    send_status();
   } else if (strstr(topic, "SET")) {
-    Serial.print("recived a SET message - param: '");
-    p = strtok_r(msg," ",&i);
-    while (p) {
-      Serial.print(p);
-      Serial.print(" , ");
-      p = strtok_r(NULL," ",&i);
+    p1 = strtok_r(msg," ",&i);
+    p2 = strtok_r(NULL," ",&i);
+    if (strstr(p1, "TIME")) {
+      update_time(p2);
+    } else if (strstr(p1, "THR")) {
+      p3 = strtok_r(NULL," ",&i);
+      update_thr(p2, p3);
+    } else if (strstr(p1, "CHECK")) {
+      p3 = strtok_r(NULL," ",&i);
+      update_check(p2, p3);
+    } else if (strstr(p1, "START_REQ")) {
+      update_start();
     }
-    Serial.println("'");
   } else if (strstr(topic, "GET")) {
-    Serial.println("recived a GET message");
-    do {
-      p = strtok_r(msg," ",&i);
-      Serial.print(p);
-      Serial.print(" ");
-    } while (p);
+    p1 = strtok_r(msg," ",&i);
+    p2 = strtok_r(NULL," ",&i);
+    if (strstr(p1, "TIME")) {
+      send_time();
+    } else if (strstr(p1, "THR")) {
+      send_thr(p2);
+    }
   }
   free(msg);
-  /*
-  // Switch on the LED if an 1 was received as first character
-  if ((char)payload[0] == '1') {
-    digitalWrite(BUILTIN_LED, LOW); 
-  } else {
-    digitalWrite(BUILTIN_LED, HIGH);
-  }
-  */
-
 }
 
 void check_connection() {

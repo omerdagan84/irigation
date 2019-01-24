@@ -19,6 +19,8 @@ const char* ssid = "dagan";
 const char* password = "dagan123";
 const char* mqtt_server = "192.168.1.102";
 const char* dev_name = "irg1";
+int minutes = 0;
+int last_check = 0;
 
 int SENSE_A_THR = 700;
 int SENSE_B_THR = 700;
@@ -34,6 +36,15 @@ void reconnect();
 void send_msg(char *msg);
 void irigate();
 void check_connection();
+
+void send_status( void );
+void update_time(char *param);
+void update_thr(char *parama, char *paramb);
+void update_check(char *parama, char *paramb);
+void update_start( void );
+
+void send_time( void );
+void send_thr(char *param);
 
 enum t_state {
   WAIT,
