@@ -21,6 +21,7 @@ const char* mqtt_server = "192.168.1.102";
 const char* dev_name = "irg1";
 int minutes = 0;
 int last_check = 0;
+int check_time = 0;
 
 int SENSE_A_THR = 700;
 int SENSE_B_THR = 700;
@@ -45,6 +46,7 @@ void update_start( void );
 
 void send_time( void );
 void send_thr(char *param);
+
 
 enum t_state {
   WAIT,

@@ -47,7 +47,7 @@ void reconnect() {
 void send_msg(char *msg) {
       char topic[128];
       snprintf(topic, sizeof(topic), "%s/#", dev_name);
-      client.publish(dev_name, msg);
+      client.publish(topic, msg);
 }
 
 void mqtt_callback(char* topic, byte* payload, unsigned int length) {

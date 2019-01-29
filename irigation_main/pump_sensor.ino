@@ -44,6 +44,7 @@ int read_humidity(int sensor) {
 
 void irigate(){
   int sRead;
+  
   sRead = read_humidity(S_PWR_A);
   if (sRead > SENSE_A_THR)
     pump_seq(PUMPA, 5);
