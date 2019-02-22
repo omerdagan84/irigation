@@ -45,26 +45,28 @@ void setup() {
 }
 
 void loop() {
+  int pumped;
   timer.tick();
   check_connection();
 
-  long now = millis();
-  if (now - lastMsg > 2000) {
-    lastMsg = now;
-    ++value;
-    snprintf (msg, 75, "hello world #%ld", value);
-    Serial.print("Publish message: ");
-    Serial.println(msg);
-    send_msg(msg);
-  }
-
   switch(state) {
     case WAIT:
+      if (minutes == check_time)
+        state = IR_START;
       break;
     case IR_START:
-      irigate();
+      pumped = irigate();
+      if (pumped)
+        state = IR_SEQ;
+      else
+        state = WAIT;
       break;
     case IR_SEQ:
+      if ((minutes - last_check) > 15) {
+        pumped = irigate();
+        if (!pumped)
+          state = WAIT;
+      }
       break;
     case IR_END:
       break;

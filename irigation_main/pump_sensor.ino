@@ -42,22 +42,36 @@ int read_humidity(int sensor) {
     return temp;
 }
 
-void irigate(){
+int irigate(){
   int sRead;
+  int pumped = 0;
+  
+  Serial.println("starting irigation sequance");
   
   sRead = read_humidity(S_PWR_A);
-  if (sRead > SENSE_A_THR)
-    pump_seq(PUMPA, 5);
+  if (sRead > SENSE_A_THR) {
+    pump_seq(PUMPA, PUMP_TIME);
+    pumped++;
+  }
 
   sRead = read_humidity(S_PWR_B);
-  if (sRead > SENSE_B_THR)
-    pump_seq(PUMPB, 5);
+  if (sRead > SENSE_B_THR) {
+    pump_seq(PUMPB, PUMP_TIME);
+    pumped++;
+  }
 
   sRead = read_humidity(S_PWR_C);
-  if (sRead > SENSE_C_THR)
-    pump_seq(PUMPC, 5);
+  if (sRead > SENSE_C_THR) {
+    pump_seq(PUMPC, PUMP_TIME);
+    pumped++;
+  }
 
   sRead = read_humidity(S_PWR_D);
-  if (sRead > SENSE_D_THR)
-    pump_seq(PUMPD, 5);
+  if (sRead > SENSE_D_THR) {
+    pump_seq(PUMPD, PUMP_TIME);
+    pumped++;
+  }
+
+  last_check = minutes;
+  return (pumped);
 }

@@ -46,7 +46,11 @@ void reconnect() {
 
 void send_msg(char *msg) {
       char topic[128];
-      snprintf(topic, sizeof(topic), "%s/#", dev_name);
+      snprintf(topic, sizeof(topic), "%s", dev_name);
+      Serial.print("Sending msg on topic: ");
+      Serial.println(topic);
+      Serial.print("msg: ");
+      Serial.println(msg);
       client.publish(topic, msg);
 }
 
@@ -70,7 +74,8 @@ void mqtt_callback(char* topic, byte* payload, unsigned int length) {
     p1 = strtok_r(msg," ",&i);
     p2 = strtok_r(NULL," ",&i);
     if (strstr(p1, "TIME")) {
-      update_time(p2);
+      p3 = strtok_r(NULL," ",&i);
+      update_time(p2, p3);
     } else if (strstr(p1, "THR")) {
       p3 = strtok_r(NULL," ",&i);
       update_thr(p2, p3);

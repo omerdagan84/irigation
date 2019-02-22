@@ -1,0 +1,23 @@
+# subscribe to messages from the device
+mosquitto_sub -h 192.168.1.102 -t irg1/# -v
+
+#retrive the system status
+mosquitto_pub -h 192.168.1.102 -t irg1/STATUS -m 0
+
+#set the threshold for a certain pump sensor
+mosquitto_pub -h 192.168.1.102 -t irg1/SET -m "THR A 200"
+
+#set device time
+mosquitto_pub -h 192.168.1.102 -t irg1/SET -m "TIME 10 52"
+
+#set the device check-time
+mosquitto_pub -h 192.168.1.102 -t irg1/SET -m "CHECK 10 54"
+
+#start irigation sequance
+mosquitto_pub -h 192.168.1.102 -t irg1/START_REQ -m 0
+
+#GET device time
+mosquitto_pub -h 192.168.1.102 -t irg1/GET -m "TIME"
+
+#GET specific threshold
+mosquitto_pub -h 192.168.1.102 -t irg1/GET -m "THR D"
