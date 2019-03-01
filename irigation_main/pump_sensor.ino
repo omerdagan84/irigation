@@ -46,7 +46,7 @@ int irigate(){
   int sRead;
   int pumped = 0;
   
-  Serial.println("starting irigation sequance");
+  Serial.println("starting irigation sequance inner");
   
   sRead = read_humidity(S_PWR_A);
   if (sRead > SENSE_A_THR) {
@@ -73,5 +73,13 @@ int irigate(){
   }
 
   last_check = minutes;
+
+  Serial.print("currnt time: ");
+  Serial.print(minutes);
+  Serial.print(" last_check time: ");
+  Serial.print(last_check);
+  Serial.print(" pumped: ");
+  Serial.println(pumped);
+  
   return (pumped);
 }
