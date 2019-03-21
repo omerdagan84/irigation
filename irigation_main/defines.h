@@ -6,15 +6,15 @@
 
 #define PUMP_TIME 10
 
-#define PUMPA D8
-#define PUMPB D7
-#define PUMPC D6
-#define PUMPD D5
+#define PUMPA D4
+#define PUMPB D3
+#define PUMPC D2
+#define PUMPD D1
 
-#define S_PWR_A D1
-#define S_PWR_B D2
-#define S_PWR_C D3
-#define S_PWR_D D4
+#define S_PWR_A D8
+#define S_PWR_B D7
+#define S_PWR_C D6
+#define S_PWR_D D5
 
 const char* ssid = "dagan";
 const char* password = "dagan123";

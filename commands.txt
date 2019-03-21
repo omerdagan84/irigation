@@ -1,3 +1,6 @@
+mosquitto_sub -h 192.168.1.102 -t irg1/# -v
+mosquitto_sub -h 192.168.1.102 -t irg1/# -v
+
 # subscribe to messages from the device
 mosquitto_sub -h 192.168.1.102 -t irg1/# -v
 
