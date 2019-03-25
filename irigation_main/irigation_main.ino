@@ -18,10 +18,11 @@ bool toggle_led(void *) {
   return true; // keep timer active? true
 }
 
-
+int sequance;
 bool check_status (void *)
 {
   int pumped;
+  
   
   minutes++;
   if (minutes == (60 * 24))
@@ -33,6 +34,8 @@ bool check_status (void *)
 
 switch(state) {
     case WAIT:
+      if (minutes == led_time_on || minutes == led_time_off)
+          toggle_led( NULL );
       if (minutes == check_time)
         state = IR_START;
       break;
@@ -42,6 +45,7 @@ switch(state) {
       if (pumped) {
         Serial.println("Irigated first sequance");
         state = IR_SEQ;
+        sequance = 0;
       } else {
         Serial.println("No need to irigate");
         state = WAIT;
@@ -49,13 +53,18 @@ switch(state) {
       break;
     case IR_SEQ:
       Serial.println("irigation seq state");
-      if ((minutes - last_check) > 15) {
+      sequance++;
+      if (((minutes - last_check) > 15) && (sequance < 5)) {
+        
         Serial.println("rechecking irigation seq");
         pumped = irigate();
         if (!pumped) {
           Serial.println("No need to irigate - moving back to WAIT");
           state = WAIT;
         }
+      } else {
+        sequance = 0;
+        state = WAIT;
       }
       break;
     case IR_END:
@@ -69,7 +78,6 @@ void setup() {
   
   setup_pump_and_sensor();
   setup_wifi();
-  timer.every(500, toggle_led);  
   timer.every(60 * 1000 , check_status);  
   
   client.setServer(mqtt_server, 1883);

@@ -6,15 +6,15 @@
 
 #define PUMP_TIME 10
 
-#define PUMPA D4
 #define PUMPB D3
 #define PUMPC D2
 #define PUMPD D1
 
-#define S_PWR_A D8
-#define S_PWR_B D7
-#define S_PWR_C D6
-#define S_PWR_D D5
+#define S_PWR_A D5
+
+#define S_PWR_B D8
+#define S_PWR_C D7
+#define S_PWR_D D6
 
 const char* ssid = "dagan";
 const char* password = "dagan123";
@@ -24,6 +24,8 @@ const char* dev_name = "irg1";
 int minutes = 0;
 int last_check = 0;
 int check_time = (10 * 60) + 0;
+int led_time_on = (6 * 60) + 0;
+int led_time_off = (22 * 60) + 0;
 
 int SENSE_A_THR = 700;
 int SENSE_B_THR = 700;

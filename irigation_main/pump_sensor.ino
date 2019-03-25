@@ -2,11 +2,9 @@
 
 
 void setup_pump_and_sensor() {
-  digitalWrite(BUILTIN_LED, LOW);
+  digitalWrite(BUILTIN_LED, HIGH);
   pinMode(BUILTIN_LED, OUTPUT);     // Initialize the BUILTIN_LED pin as an output
 
-  digitalWrite(PUMPA, HIGH);
-  pinMode(PUMPA, OUTPUT);
   digitalWrite(PUMPB, HIGH);
   pinMode(PUMPB, OUTPUT);
   digitalWrite(PUMPC, HIGH);
@@ -48,12 +46,6 @@ int irigate(){
   
   Serial.println("starting irigation sequance inner");
   
-  sRead = read_humidity(S_PWR_A);
-  if (sRead > SENSE_A_THR) {
-    pump_seq(PUMPA, PUMP_TIME);
-    pumped++;
-  }
-
   sRead = read_humidity(S_PWR_B);
   if (sRead > SENSE_B_THR) {
     pump_seq(PUMPB, PUMP_TIME);
