@@ -13,8 +13,14 @@ int temp;
 bool status = false;
 auto timer = timer_create_default(); // create a timer with default settings
 
-bool toggle_led(void *) {
-  digitalWrite(LED_BUILTIN, !digitalRead(LED_BUILTIN)); // toggle the LED
+bool grow_led(bool state) {
+	if (state) {
+		led_state = HIGH;
+	} else {
+		led_state = LOW;
+	}
+	digitalWrite(LED_BUILTIN, led_state);
+
   return true; // keep timer active? true
 }
 
@@ -34,8 +40,11 @@ bool check_status (void *)
 
 switch(state) {
     case WAIT:
-      if (minutes == led_time_on || minutes == led_time_off)
-          toggle_led( NULL );
+      if (minutes >= led_time_on && minutes <= led_time_off)
+          grow_led( true );
+	  else
+		  grow_led( false );
+
       if (minutes == check_time)
         state = IR_START;
       break;

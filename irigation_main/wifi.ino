@@ -1,6 +1,7 @@
 #include "defines.h"
 
 void setup_wifi() {
+  int retry_count = 0;
 
   delay(1000);
   // We start by connecting to a WiFi network
@@ -10,20 +11,28 @@ void setup_wifi() {
 
   WiFi.begin(ssid, password);
 
-  while (WiFi.status() != WL_CONNECTED) {
+  while ((WiFi.status() != WL_CONNECTED) && ( retry_count < RETRY_LIMIT )) {
     delay(500);
     Serial.print(".");
+	retry_count++;
   }
 
-  Serial.println("");
-  Serial.println("WiFi connected");
-  Serial.println("IP address: ");
-  Serial.println(WiFi.localIP());
+  if ( retry_count == RETRY_LIMIT ) {
+	Serial.println("Failed to connect to server - working standalone");
+  } else {
+    Serial.println("");
+    Serial.println("WiFi connected");
+    Serial.println("IP address: ");
+    Serial.println(WiFi.localIP());
+  }
 }
 
 void reconnect() {
+  int retry_count = 0;
+  setup_wifi();
+
   // Loop until we're reconnected
-  while (!client.connected()) {
+  while ((!client.connected()) && ( retry_count < RETRY_LIMIT )) {
     Serial.print("Attempting MQTT connection...");
     // Attempt to connect
     if (client.connect("ESP8266Client")) {
@@ -34,14 +43,20 @@ void reconnect() {
       char topic[128];
       snprintf(topic, sizeof(topic), "%s/#", dev_name);
       client.subscribe(topic);
+	  connection_state = true;
+      timer.in(60 * 60 * 1000, reconnect);
+	  return;
     } else {
       Serial.print("failed, rc=");
       Serial.print(client.state());
-      Serial.println(" try again in 5 seconds");
+      Serial.println(" try again in 1 seconds");
       // Wait 5 seconds before retrying
-      delay(5000);
+      delay(1000);
     }
   }
+  connection_state = false;
+  timer.in(10 * 60 * 1000, reconnect);
+  return;
 }
 
 void send_msg(char *msg) {
