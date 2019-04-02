@@ -5,6 +5,7 @@
 #include <timer.h>
 
 #define PUMP_TIME 10
+#define RETRY_LIMIT 10
 
 #define PUMPB D3
 #define PUMPC D2
@@ -21,11 +22,14 @@ const char* password = "dagan123";
 const char* mqtt_server = "192.168.1.102";
 const char* dev_name = "irg1";
 
+
 int minutes = 0;
 int last_check = 0;
 int check_time = (10 * 60) + 0;
 int led_time_on = (6 * 60) + 0;
 int led_time_off = (22 * 60) + 0;
+int led_state = LOW;
+bool connection_state = false;
 
 int SENSE_A_THR = 700;
 int SENSE_B_THR = 700;
@@ -37,7 +41,7 @@ void setup_pump_and_sensor();
 void pump_seq(int pump, int sDuration);
 int read_humidity(int sensor_pwr);
 void setup_wifi();
-void reconnect();
+bool reconnect( void * );
 void send_msg(char *msg);
 int irigate();
 void check_connection();

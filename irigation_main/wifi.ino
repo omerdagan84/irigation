@@ -27,7 +27,7 @@ void setup_wifi() {
   }
 }
 
-void reconnect() {
+bool reconnect( void *param ) {
   int retry_count = 0;
   setup_wifi();
 
@@ -45,7 +45,7 @@ void reconnect() {
       client.subscribe(topic);
 	  connection_state = true;
       timer.in(60 * 60 * 1000, reconnect);
-	  return;
+	  return true;
     } else {
       Serial.print("failed, rc=");
       Serial.print(client.state());
@@ -56,7 +56,7 @@ void reconnect() {
   }
   connection_state = false;
   timer.in(10 * 60 * 1000, reconnect);
-  return;
+  return true;
 }
 
 void send_msg(char *msg) {
@@ -114,7 +114,7 @@ void mqtt_callback(char* topic, byte* payload, unsigned int length) {
 
 void check_connection() {
   if (!client.connected()) {
-    reconnect();
+    reconnect( NULL );
   }
   client.loop();
 }
