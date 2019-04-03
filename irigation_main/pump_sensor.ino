@@ -41,25 +41,24 @@ int read_humidity(int sensor) {
 }
 
 int irigate(){
-  int sRead;
   int pumped = 0;
   
   Serial.println("starting irigation sequance inner");
   
-  sRead = read_humidity(S_PWR_B);
-  if (sRead > SENSE_B_THR) {
+  sense_B_read = read_humidity(S_PWR_B);
+  if (sense_B_read > SENSE_B_THR) {
     pump_seq(PUMPB, PUMP_TIME);
     pumped++;
   }
 
-  sRead = read_humidity(S_PWR_C);
-  if (sRead > SENSE_C_THR) {
+  sense_C_read = read_humidity(S_PWR_C);
+  if (sense_C_read > SENSE_C_THR) {
     pump_seq(PUMPC, PUMP_TIME);
     pumped++;
   }
 
-  sRead = read_humidity(S_PWR_D);
-  if (sRead > SENSE_D_THR) {
+  sense_D_read = read_humidity(S_PWR_D);
+  if (sense_D_read > SENSE_D_THR) {
     pump_seq(PUMPD, PUMP_TIME);
     pumped++;
   }

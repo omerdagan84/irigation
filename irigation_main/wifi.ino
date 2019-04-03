@@ -38,10 +38,10 @@ bool reconnect( void *param ) {
   while ((!client.connected()) && ( retry_count++ < RETRY_LIMIT )) {
     Serial.print("Attempting MQTT connection...");
     // Attempt to connect
-    if (client.connect("ESP8266Client")) {
+    if (client.connect("Irigation_kitchen_Client")) {
       Serial.println("connected");
       // Once connected, publish an announcement...
-      client.publish(dev_name, "hello world");
+      send_status();
       // ... and resubscribe
       char topic[128];
       snprintf(topic, sizeof(topic), "%s/#", dev_name);

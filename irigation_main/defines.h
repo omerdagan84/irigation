@@ -31,10 +31,13 @@ int led_time_off = (22 * 60) + 0;
 int led_state = LOW;
 bool connection_state = false;
 
-int SENSE_A_THR = 700;
 int SENSE_B_THR = 700;
 int SENSE_C_THR = 700;
 int SENSE_D_THR = 700;
+
+int sense_B_read = 2121;
+int sense_C_read = 2121;
+int sense_D_read = 2121;
 
 void mqtt_callback(char* topic, byte* payload, unsigned int length);
 void setup_pump_and_sensor();
