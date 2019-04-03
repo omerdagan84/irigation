@@ -91,10 +91,11 @@ void setup() {
   
   client.setServer(mqtt_server, 1883);
   client.setCallback(mqtt_callback);
+
+  check_connection( NULL );
 }
 
 int ir_seq = 0;
 void loop() {
   timer.tick();
-  check_connection();
 }

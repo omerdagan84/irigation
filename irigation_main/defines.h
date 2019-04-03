@@ -44,7 +44,7 @@ void setup_wifi();
 bool reconnect( void * );
 void send_msg(char *msg);
 int irigate();
-void check_connection();
+bool check_connection( void *);
 
 void send_status( void );
 void update_time(char *param);

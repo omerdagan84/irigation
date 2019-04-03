@@ -3,6 +3,9 @@
 void setup_wifi() {
   int retry_count = 0;
 
+  if (WiFi.status() == WL_CONNECTED)
+    return;
+
   delay(1000);
   // We start by connecting to a WiFi network
   Serial.println();
@@ -11,7 +14,7 @@ void setup_wifi() {
 
   WiFi.begin(ssid, password);
 
-  while ((WiFi.status() != WL_CONNECTED) && ( retry_count < RETRY_LIMIT )) {
+  while ((WiFi.status() != WL_CONNECTED) && ( retry_count < RETRY_LIMIT *10 )) {
     delay(500);
     Serial.print(".");
 	retry_count++;
@@ -32,7 +35,7 @@ bool reconnect( void *param ) {
   setup_wifi();
 
   // Loop until we're reconnected
-  while ((!client.connected()) && ( retry_count < RETRY_LIMIT )) {
+  while ((!client.connected()) && ( retry_count++ < RETRY_LIMIT )) {
     Serial.print("Attempting MQTT connection...");
     // Attempt to connect
     if (client.connect("ESP8266Client")) {
@@ -43,8 +46,9 @@ bool reconnect( void *param ) {
       char topic[128];
       snprintf(topic, sizeof(topic), "%s/#", dev_name);
       client.subscribe(topic);
-	  connection_state = true;
-      timer.in(60 * 60 * 1000, reconnect);
+	    connection_state = true;
+      Serial.println("established connection to broker... re-check in 1 hour");
+      timer.in(60 * 60 * 1000, check_connection);
 	  return true;
     } else {
       Serial.print("failed, rc=");
@@ -54,8 +58,9 @@ bool reconnect( void *param ) {
       delay(1000);
     }
   }
+  Serial.println("failed to establish connection to broker... reschedualing in 10 min");
   connection_state = false;
-  timer.in(10 * 60 * 1000, reconnect);
+  timer.in(10 * 60 * 1000, check_connection);
   return true;
 }
 
@@ -112,7 +117,7 @@ void mqtt_callback(char* topic, byte* payload, unsigned int length) {
   free(msg);
 }
 
-void check_connection() {
+bool check_connection( void * ) {
   if (!client.connected()) {
     reconnect( NULL );
   }
