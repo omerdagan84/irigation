@@ -12,8 +12,8 @@
 static char msg_payload[128];
 
 void send_status( void ){
-  snprintf(msg_payload, sizeof(msg_payload), "ct(%d) lc(%d) nc(%d) thA(%d) thB(%d) thC(%d) thD(%d)",
-                  minutes, last_check, check_time, SENSE_A_THR, SENSE_B_THR, SENSE_C_THR, SENSE_D_THR);
+  snprintf(msg_payload, sizeof(msg_payload), "ct(%d) lc(%d) nc(%d) thB(%d) rB(%d) thC(%d) rC(%d) thD(%d) rD(%d)",
+                  minutes, last_check, check_time, SENSE_B_THR, sense_B_read, SENSE_C_THR, sense_C_read, SENSE_D_THR, sense_D_read);
   send_msg(msg_payload); 
 }
 
@@ -25,9 +25,6 @@ void update_thr(char *parama, char *paramb){
   }
 
   switch (parama[0]) {
-    case 'A':
-      SENSE_A_THR = val;
-      break;
     case 'B':
       SENSE_B_THR = val;
       break;
@@ -75,9 +72,6 @@ void send_time( void ){
 
 void send_thr(char *param){
   switch (param[0]) {
-    case 'A':
-      snprintf(msg_payload, sizeof(msg_payload), "thA(%d)",SENSE_A_THR);
-      break;
     case 'B':
       snprintf(msg_payload, sizeof(msg_payload), "thB(%d)",SENSE_B_THR);
       break;

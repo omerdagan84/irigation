@@ -1,6 +1,10 @@
 #include "defines.h"
 
 void setup_wifi() {
+  int retry_count = 0;
+
+  if (WiFi.status() == WL_CONNECTED)
+    return;
 
   delay(1000);
   // We start by connecting to a WiFi network
@@ -10,38 +14,57 @@ void setup_wifi() {
 
   WiFi.begin(ssid, password);
 
-  while (WiFi.status() != WL_CONNECTED) {
+  while ((WiFi.status() != WL_CONNECTED) && ( retry_count < RETRY_LIMIT *10 )) {
     delay(500);
     Serial.print(".");
+	retry_count++;
   }
 
-  Serial.println("");
-  Serial.println("WiFi connected");
-  Serial.println("IP address: ");
-  Serial.println(WiFi.localIP());
+  if ( retry_count == RETRY_LIMIT ) {
+	Serial.println("Failed to connect to server - working standalone");
+  } else {
+    Serial.println("");
+    Serial.println("WiFi connected");
+    Serial.println("IP address: ");
+    Serial.println(WiFi.localIP());
+  }
 }
 
-void reconnect() {
+bool reconnect( void *param ) {
+  int retry_count = 0;
+  setup_wifi();
+
   // Loop until we're reconnected
-  while (!client.connected()) {
+  while ((!client.connected()) && ( retry_count++ < RETRY_LIMIT )) {
+    client.setServer(mqtt_server, 1883);
+    client.setCallback(mqtt_callback);
     Serial.print("Attempting MQTT connection...");
     // Attempt to connect
-    if (client.connect("ESP8266Client")) {
+    if (client.connect("Irigation_kitchen_Client")) {
       Serial.println("connected");
       // Once connected, publish an announcement...
-      client.publish(dev_name, "hello world");
+      send_status();
       // ... and resubscribe
       char topic[128];
       snprintf(topic, sizeof(topic), "%s/#", dev_name);
       client.subscribe(topic);
+      Serial.print(topic);
+	    connection_state = true;
+      Serial.println("established connection to broker...");
+      timer.every(5000, check_connection);
+	  return true;
     } else {
       Serial.print("failed, rc=");
       Serial.print(client.state());
-      Serial.println(" try again in 5 seconds");
+      Serial.println(" try again in 1 seconds");
       // Wait 5 seconds before retrying
-      delay(5000);
+      delay(1000);
     }
   }
+  Serial.println("failed to establish connection to broker... reschedualing in 10 min");
+  connection_state = false;
+  timer.in(10 * 60 * 1000, check_connection);
+  return true;
 }
 
 void send_msg(char *msg) {
@@ -83,6 +106,7 @@ void mqtt_callback(char* topic, byte* payload, unsigned int length) {
       p3 = strtok_r(NULL," ",&i);
       update_check(p2, p3);
     } else if (strstr(p1, "START_REQ")) {
+      Serial.println("got update message");
       update_start();
     }
   } else if (strstr(topic, "GET")) {
@@ -97,9 +121,9 @@ void mqtt_callback(char* topic, byte* payload, unsigned int length) {
   free(msg);
 }
 
-void check_connection() {
+bool check_connection( void * ) {
   if (!client.connected()) {
-    reconnect();
+    reconnect( NULL );
   }
   client.loop();
 }
