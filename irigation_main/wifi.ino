@@ -36,6 +36,8 @@ bool reconnect( void *param ) {
 
   // Loop until we're reconnected
   while ((!client.connected()) && ( retry_count++ < RETRY_LIMIT )) {
+    client.setServer(mqtt_server, 1883);
+    client.setCallback(mqtt_callback);
     Serial.print("Attempting MQTT connection...");
     // Attempt to connect
     if (client.connect("Irigation_kitchen_Client")) {
@@ -46,9 +48,10 @@ bool reconnect( void *param ) {
       char topic[128];
       snprintf(topic, sizeof(topic), "%s/#", dev_name);
       client.subscribe(topic);
+      Serial.print(topic);
 	    connection_state = true;
-      Serial.println("established connection to broker... re-check in 1 hour");
-      timer.in(60 * 60 * 1000, check_connection);
+      Serial.println("established connection to broker...");
+      timer.every(5000, check_connection);
 	  return true;
     } else {
       Serial.print("failed, rc=");
@@ -103,6 +106,7 @@ void mqtt_callback(char* topic, byte* payload, unsigned int length) {
       p3 = strtok_r(NULL," ",&i);
       update_check(p2, p3);
     } else if (strstr(p1, "START_REQ")) {
+      Serial.println("got update message");
       update_start();
     }
   } else if (strstr(topic, "GET")) {

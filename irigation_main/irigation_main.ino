@@ -89,9 +89,6 @@ void setup() {
   setup_wifi();
   timer.every(60 * 1000 , check_status);  
   
-  client.setServer(mqtt_server, 1883);
-  client.setCallback(mqtt_callback);
-
   check_connection( NULL );
 }
 

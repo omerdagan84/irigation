@@ -17,7 +17,7 @@ mosquitto_pub -h 192.168.1.102 -t irg1/SET -m "TIME 10 52"
 mosquitto_pub -h 192.168.1.102 -t irg1/SET -m "CHECK 10 54"
 
 #start irigation sequance
-mosquitto_pub -h 192.168.1.102 -t irg1/START_REQ -m 0
+mosquitto_pub -h 192.168.1.102 -t irg1/SET -m "START_REQ"
 
 #GET device time
 mosquitto_pub -h 192.168.1.102 -t irg1/GET -m "TIME"
