@@ -17,27 +17,37 @@
 #define S_PWR_C D7
 #define S_PWR_D D6
 
-const char* ssid = "dagan";
-const char* password = "dagan123";
-const char* mqtt_server = "192.168.1.102";
-const char* dev_name = "irg1";
+typedef struct {
+	const char* ssid = "dagan";
+	const char* password = "dagan123";
+	const char* mqtt_server = "192.168.1.102";
+	const char* dev_name = "irg1";
+	bool connection_state = false;
+} net_ctx_t;
+net_ctx_t net_ctx;
 
 
-int minutes = 0;
-int last_check = 0;
-int check_time = (10 * 60) + 0;
-int led_time_on = (6 * 60) + 0;
-int led_time_off = (22 * 60) + 0;
-int led_state = LOW;
-bool connection_state = false;
+typedef struct {
+	int minutes = 0;
+	int last_check = 0;
+	int check_time = (10 * 60) + 0;
+	int led_time_on = (6 * 60) + 0;
+	int led_time_off = (22 * 60) + 0;
+} time_ctx_t;
+time_ctx_t time_ctx;
+
+typedef struct {
+	int led_state = LOW;
+	int sense_B_read = 2121;
+	int sense_C_read = 2121;
+	int sense_D_read = 2121;
+} state_ctx_t;
+state_ctx_t state_ctx;
 
 int SENSE_B_THR = 700;
 int SENSE_C_THR = 700;
 int SENSE_D_THR = 700;
 
-int sense_B_read = 2121;
-int sense_C_read = 2121;
-int sense_D_read = 2121;
 
 void mqtt_callback(char* topic, byte* payload, unsigned int length);
 void setup_pump_and_sensor();

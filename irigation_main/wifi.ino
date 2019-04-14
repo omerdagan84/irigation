@@ -10,9 +10,9 @@ void setup_wifi() {
   // We start by connecting to a WiFi network
   Serial.println();
   Serial.print("Connecting to ");
-  Serial.println(ssid);
+  Serial.println(net_ctx.ssid);
 
-  WiFi.begin(ssid, password);
+  WiFi.begin(net_ctx.ssid, net_ctx.password);
 
   while ((WiFi.status() != WL_CONNECTED) && ( retry_count < RETRY_LIMIT *10 )) {
     delay(500);
@@ -36,7 +36,7 @@ bool reconnect( void *param ) {
 
   // Loop until we're reconnected
   while ((!client.connected()) && ( retry_count++ < RETRY_LIMIT )) {
-    client.setServer(mqtt_server, 1883);
+    client.setServer(net_ctx.mqtt_server, 1883);
     client.setCallback(mqtt_callback);
     Serial.print("Attempting MQTT connection...");
     // Attempt to connect
@@ -46,10 +46,10 @@ bool reconnect( void *param ) {
       send_status();
       // ... and resubscribe
       char topic[128];
-      snprintf(topic, sizeof(topic), "%s/#", dev_name);
+      snprintf(topic, sizeof(topic), "%s/#", net_ctx.dev_name);
       client.subscribe(topic);
       Serial.print(topic);
-	    connection_state = true;
+	    net_ctx.connection_state = true;
       Serial.println("established connection to broker...");
       timer.every(5000, check_connection);
 	  return true;
@@ -62,14 +62,14 @@ bool reconnect( void *param ) {
     }
   }
   Serial.println("failed to establish connection to broker... reschedualing in 10 min");
-  connection_state = false;
+  net_ctx.connection_state = false;
   timer.in(10 * 60 * 1000, check_connection);
   return true;
 }
 
 void send_msg(char *msg) {
       char topic[128];
-      snprintf(topic, sizeof(topic), "%s", dev_name);
+      snprintf(topic, sizeof(topic), "%s", net_ctx.dev_name);
       Serial.print("Sending msg on topic: ");
       Serial.println(topic);
       Serial.print("msg: ");

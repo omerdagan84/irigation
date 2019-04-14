@@ -45,30 +45,30 @@ int irigate(){
   
   Serial.println("starting irigation sequance inner");
   
-  sense_B_read = read_humidity(S_PWR_B);
-  if (sense_B_read > SENSE_B_THR) {
+  state_ctx.sense_B_read = read_humidity(S_PWR_B);
+  if (state_ctx.sense_B_read > SENSE_B_THR) {
     pump_seq(PUMPB, PUMP_TIME);
     pumped++;
   }
 
-  sense_C_read = read_humidity(S_PWR_C);
-  if (sense_C_read > SENSE_C_THR) {
+  state_ctx.sense_C_read = read_humidity(S_PWR_C);
+  if (state_ctx.sense_C_read > SENSE_C_THR) {
     pump_seq(PUMPC, PUMP_TIME);
     pumped++;
   }
 
-  sense_D_read = read_humidity(S_PWR_D);
-  if (sense_D_read > SENSE_D_THR) {
+  state_ctx.sense_D_read = read_humidity(S_PWR_D);
+  if (state_ctx.sense_D_read > SENSE_D_THR) {
     pump_seq(PUMPD, PUMP_TIME);
     pumped++;
   }
 
-  last_check = minutes;
+  time_ctx.last_check = time_ctx.minutes;
 
   Serial.print("currnt time: ");
-  Serial.print(minutes);
+  Serial.print(time_ctx.minutes);
   Serial.print(" last_check time: ");
-  Serial.print(last_check);
+  Serial.print(time_ctx.last_check);
   Serial.print(" pumped: ");
   Serial.println(pumped);
   

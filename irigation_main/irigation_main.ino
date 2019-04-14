@@ -15,11 +15,11 @@ auto timer = timer_create_default(); // create a timer with default settings
 
 bool grow_led(bool state) {
 	if (state) {
-		led_state = HIGH;
+		state_ctx.led_state = HIGH;
 	} else {
-		led_state = LOW;
+		state_ctx.led_state = LOW;
 	}
-	digitalWrite(LED_BUILTIN, led_state);
+	digitalWrite(LED_BUILTIN, state_ctx.led_state);
 
   return true; // keep timer active? true
 }
@@ -30,22 +30,22 @@ bool check_status (void *)
   int pumped;
   
   
-  minutes++;
-  if (minutes == (60 * 24))
-    minutes = 0;
+  time_ctx.minutes++;
+  if (time_ctx.minutes == (60 * 24))
+    time_ctx.minutes = 0;
   
   Serial.print("checking system status after (");
-  Serial.print(minutes);
+  Serial.print(time_ctx.minutes);
   Serial.println(") minutes from reset");
 
 switch(state) {
     case WAIT:
-      if (minutes >= led_time_on && minutes <= led_time_off)
+      if (time_ctx.minutes >= time_ctx.led_time_on && time_ctx.minutes <= time_ctx.led_time_off)
           grow_led( true );
 	  else
 		  grow_led( false );
 
-      if (minutes == check_time)
+      if (time_ctx.minutes == time_ctx.check_time)
         state = IR_START;
       break;
     case IR_START:
@@ -63,7 +63,7 @@ switch(state) {
     case IR_SEQ:
       Serial.println("irigation seq state");
       sequance++;
-      if (((minutes - last_check) > 15) && (sequance < 5)) {
+      if (((time_ctx.minutes - time_ctx.last_check) > 15) && (sequance < 5)) {
         
         Serial.println("rechecking irigation seq");
         pumped = irigate();

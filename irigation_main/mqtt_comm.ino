@@ -13,7 +13,7 @@ static char msg_payload[128];
 
 void send_status( void ){
   snprintf(msg_payload, sizeof(msg_payload), "ct(%d) lc(%d) nc(%d) thB(%d) rB(%d) thC(%d) rC(%d) thD(%d) rD(%d)",
-                  minutes, last_check, check_time, SENSE_B_THR, sense_B_read, SENSE_C_THR, sense_C_read, SENSE_D_THR, sense_D_read);
+                  time_ctx.minutes, time_ctx.last_check, time_ctx.check_time, SENSE_B_THR, state_ctx.sense_B_read, SENSE_C_THR, state_ctx.sense_C_read, SENSE_D_THR, state_ctx.sense_D_read);
   send_msg(msg_payload); 
 }
 
@@ -45,7 +45,7 @@ void update_time(char *parama, char *paramb){
     send_msg("BAD_COMMAND");
     return ;
   }
-  minutes = (hour * 60) + minu;
+  time_ctx.minutes = (hour * 60) + minu;
   send_msg("OK");
 }
 
@@ -56,7 +56,7 @@ void update_check(char *parama, char *paramb){
     send_msg("BAD_COMMAND");
     return ;
   }
-  check_time = (hour * 60) + minu;
+  time_ctx.check_time = (hour * 60) + minu;
   send_msg("OK");
   
 }
@@ -66,7 +66,7 @@ void update_start( void ){
 }
 
 void send_time( void ){
-  snprintf(msg_payload, sizeof(msg_payload), "ct(%d) lc(%d)", minutes, last_check);
+  snprintf(msg_payload, sizeof(msg_payload), "ct(%d) lc(%d)", time_ctx.minutes, time_ctx.last_check);
   send_msg(msg_payload);
 }
 
