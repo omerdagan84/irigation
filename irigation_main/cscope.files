@@ -1,3 +1,1959 @@
+cscope 15 $HOME/workspace/irigation/irigation_main               0000009968
+	@defines.h
+
+1 #i‚de‡
+_DEFINES_
+
+
+2 
+	#_DEFINES_
+
+
+	)
+
+3 
+	~<ESP8266WiFi.h
+>
+
+4 
+	~<PubSubClõ¡.h
+>
+
+5 
+	~<timî.h
+>
+
+7 
+	#PUMP_TIME
+ 10
+
+	)
+
+8 
+	#RETRY_LIMIT
+ 10
+
+	)
+
+10 
+	#PUMPB
+ 
+D3
+
+
+	)
+
+11 
+	#PUMPC
+ 
+D2
+
+
+	)
+
+12 
+	#PUMPD
+ 
+D1
+
+
+	)
+
+14 
+	#S_PWR_A
+ 
+D5
+
+
+	)
+
+16 
+	#S_PWR_B
+ 
+D8
+
+
+	)
+
+17 
+	#S_PWR_C
+ 
+D7
+
+
+	)
+
+18 
+	#S_PWR_D
+ 
+D6
+
+
+	)
+
+20 c⁄° * 
+	gssid
+ = "dagan";
+
+21 c⁄° * 
+	g∑ssw‹d
+ = "dagan123";
+
+22 c⁄° * 
+	gmqâ_£rvî
+ = "192.168.1.102";
+
+23 c⁄° * 
+	gdev_«me
+ = "irg1";
+
+26 
+	gmöuãs
+ = 0;
+
+27 
+	gœ°_check
+ = 0;
+
+28 
+	gcheck_time
+ = (10 * 60) + 0;
+
+29 
+	gÀd_time_⁄
+ = (6 * 60) + 0;
+
+30 
+	gÀd_time_off
+ = (22 * 60) + 0;
+
+31 
+	gÀd_°©e
+ = 
+LOW
+;
+
+32 
+boﬁ
+ 
+	gc⁄√˘i⁄_°©e
+ = 
+Ál£
+;
+
+34 
+	gSENSE_B_THR
+ = 700;
+
+35 
+	gSENSE_C_THR
+ = 700;
+
+36 
+	gSENSE_D_THR
+ = 700;
+
+38 
+	g£n£_B_ªad
+ = 2121;
+
+39 
+	g£n£_C_ªad
+ = 2121;
+
+40 
+	g£n£_D_ªad
+ = 2121;
+
+42 
+mqâ_ˇŒback
+(* 
+t›ic
+, 
+byã
+* 
+∑ylﬂd
+, 
+Àngth
+);
+
+43 
+£tup_pump_™d_£ns‹
+();
+
+44 
+pump_£q
+(
+pump
+, 
+sDuøti⁄
+);
+
+45 
+ªad_humidôy
+(
+£ns‹_pwr
+);
+
+46 
+£tup_wifi
+();
+
+47 
+boﬁ
+ 
+ªc⁄√˘
+( * );
+
+48 
+£nd_msg
+(*
+msg
+);
+
+49 
+úig©e
+();
+
+50 
+boﬁ
+ 
+check_c⁄√˘i⁄
+( *);
+
+52 
+£nd_°©us
+( );
+
+53 
+upd©e_time
+(*
+∑øm
+);
+
+54 
+upd©e_thr
+(*
+∑øma
+, *
+∑ømb
+);
+
+55 
+upd©e_check
+(*
+∑øma
+, *
+∑ømb
+);
+
+56 
+upd©e_°¨t
+( );
+
+58 
+£nd_time
+( );
+
+59 
+£nd_thr
+(*
+∑øm
+);
+
+62 
+	et_°©e
+ {
+
+63 
+	mWAIT
+,
+
+64 
+	mIR_START
+,
+
+65 
+	mIR_SEQ
+,
+
+66 
+	mIR_END
+
+
+68 
+t_°©e
+ 
+	g°©e
+ = 
+WAIT
+;
+
+	@irigation_main.ino
+
+5 
+	~"deföes.h
+"
+
+7 
+WiFiClõ¡
+ 
+	ge•Clõ¡
+;
+
+8 
+PubSubClõ¡
+ 
+˛õ¡
+(
+e•Clõ¡
+);
+
+9 
+	gœ°Msg
+ = 0;
+
+10 
+	gmsg
+[50];
+
+11 
+	gvÆue
+ = 0;
+
+12 
+	gãmp
+;
+
+13 
+boﬁ
+ 
+	g°©us
+ = 
+Ál£
+;
+
+14 autÿ
+	gtimî
+ = 
+timî_¸óã_deÁu…
+();
+
+16 
+boﬁ
+ 
+	$grow_Àd
+(
+boﬁ
+ 
+°©e
+) {
+
+17 i‡(
+°©e
+) {
+
+18 
+Àd_°©e
+ = 
+HIGH
+;
+
+20 
+Àd_°©e
+ = 
+LOW
+;
+
+22 
+	`digôÆWrôe
+(
+LED_BUILTIN
+, 
+Àd_°©e
+);
+
+24  
+åue
+;
+
+25 
+	}
+}
+
+27 
+	g£qu™˚
+;
+
+28 
+boﬁ
+ 
+	$check_°©us
+ (*)
+
+30 
+pum≥d
+;
+
+33 
+möuãs
+++;
+
+34 i‡(
+möuãs
+ == (60 * 24))
+
+35 
+möuãs
+ = 0;
+
+37 
+Sîül
+.
+	`¥öt
+("checking system statusáfter (");
+
+38 
+Sîül
+.
+	`¥öt
+(
+möuãs
+);
+
+39 
+Sîül
+.
+	`¥öén
+(") minutes fromÑeset");
+
+41 
+°©e
+) {
+
+42 
+WAIT
+:
+
+43 i‡(
+möuãs
+ >
+Àd_time_⁄
+ && möuã†<
+Àd_time_off
+)
+
+44 
+	`grow_Àd
+–
+åue
+ );
+
+46 
+	`grow_Àd
+–
+Ál£
+ );
+
+48 i‡(
+möuãs
+ =
+check_time
+)
+
+49 
+°©e
+ = 
+IR_START
+;
+
+51 
+IR_START
+:
+
+52 
+Sîül
+.
+	`¥öén
+("starting irigation sequance");
+
+53 
+pum≥d
+ = 
+	`úig©e
+();
+
+54 i‡(
+pum≥d
+) {
+
+55 
+Sîül
+.
+	`¥öén
+("Irigated first sequance");
+
+56 
+°©e
+ = 
+IR_SEQ
+;
+
+57 
+£qu™˚
+ = 0;
+
+59 
+Sîül
+.
+	`¥öén
+("NoÇeedÅo irigate");
+
+60 
+°©e
+ = 
+WAIT
+;
+
+63 
+IR_SEQ
+:
+
+64 
+Sîül
+.
+	`¥öén
+("irigation seq state");
+
+65 
+£qu™˚
+++;
+
+66 i‡(((
+möuãs
+ - 
+œ°_check
+Ë> 15Ë&& (
+£qu™˚
+ < 5)) {
+
+68 
+Sîül
+.
+	`¥öén
+("rechecking irigation seq");
+
+69 
+pum≥d
+ = 
+	`úig©e
+();
+
+70 i‡(!
+pum≥d
+) {
+
+71 
+Sîül
+.
+	`¥öén
+("NoÇeedÅo irigate - moving backÅo WAIT");
+
+72 
+°©e
+ = 
+WAIT
+;
+
+75 
+£qu™˚
+ = 0;
+
+76 
+°©e
+ = 
+WAIT
+;
+
+79 
+IR_END
+:
+
+82  
+åue
+;
+
+83 
+	}
+}
+
+85 
+	$£tup
+() {
+
+86 
+Sîül
+.
+	`begö
+(115200);
+
+88 
+	`£tup_pump_™d_£ns‹
+();
+
+89 
+	`£tup_wifi
+();
+
+90 
+timî
+.
+	`evîy
+(60 * 1000 , 
+check_°©us
+);
+
+92 
+	`check_c⁄√˘i⁄
+–
+NULL
+ );
+
+93 
+	}
+}
+
+95 
+	gú_£q
+ = 0;
+
+96 
+	$lo›
+() {
+
+97 
+timî
+.
+	`tick
+();
+
+98 
+	}
+}
+
+	@mqtt_comm.ino
+
+12 
+	gmsg_∑ylﬂd
+[128];
+
+14 
+	$£nd_°©us
+( ){
+
+15 
+	`¢¥ötf
+(
+msg_∑ylﬂd
+, (msg_payload), "ct(%d)Üc(%d)Çc(%d)ÅhB(%d)ÑB(%d)ÅhC(%d)ÑC(%d)ÅhD(%d)ÑD(%d)",
+
+16 
+möuãs
+, 
+œ°_check
+, 
+check_time
+, 
+SENSE_B_THR
+, 
+£n£_B_ªad
+, 
+SENSE_C_THR
+, 
+£n£_C_ªad
+, 
+SENSE_D_THR
+, 
+£n£_D_ªad
+);
+
+17 
+	`£nd_msg
+(
+msg_∑ylﬂd
+);
+
+18 
+	}
+}
+
+20 
+	$upd©e_thr
+(*
+∑øma
+, *
+∑ømb
+){
+
+21 
+vÆ
+ = 
+	`©oi
+(
+∑ømb
+);
+
+22 i‡(
+vÆ
+ < 0 || val > 1400) {
+
+23 
+	`£nd_msg
+("BAD COMMAND");
+
+27 
+∑øma
+[0]) {
+
+29 
+SENSE_B_THR
+ = 
+vÆ
+;
+
+32 
+SENSE_C_THR
+ = 
+vÆ
+;
+
+35 
+SENSE_D_THR
+ = 
+vÆ
+;
+
+38 
+	`£nd_msg
+("OK");
+
+39 
+	}
+}
+
+41 
+	$upd©e_time
+(*
+∑øma
+, *
+∑ømb
+){
+
+42 
+hour
+ = 
+	`©oi
+(
+∑øma
+);
+
+43 
+möu
+ = 
+	`©oi
+(
+∑ømb
+);
+
+44 i‡((
+hour
+ < 0 || hou∏> 24Ë|| (
+möu
+ < 0 || minu >= 60)) {
+
+45 
+	`£nd_msg
+("BAD_COMMAND");
+
+48 
+möuãs
+ = (
+hour
+ * 60Ë+ 
+möu
+;
+
+49 
+	`£nd_msg
+("OK");
+
+50 
+	}
+}
+
+52 
+	$upd©e_check
+(*
+∑øma
+, *
+∑ømb
+){
+
+53 
+hour
+ = 
+	`©oi
+(
+∑øma
+);
+
+54 
+möu
+ = 
+	`©oi
+(
+∑ømb
+);
+
+55 i‡((
+hour
+ < 0 || hou∏> 24Ë|| (
+möu
+ < 0 || minu >= 60)) {
+
+56 
+	`£nd_msg
+("BAD_COMMAND");
+
+59 
+check_time
+ = (
+hour
+ * 60Ë+ 
+möu
+;
+
+60 
+	`£nd_msg
+("OK");
+
+62 
+	}
+}
+
+63 
+	$upd©e_°¨t
+( ){
+
+64 
+°©e
+ = 
+IR_START
+;
+
+65 
+	`£nd_msg
+("OK");
+
+66 
+	}
+}
+
+68 
+	$£nd_time
+( ){
+
+69 
+	`¢¥ötf
+(
+msg_∑ylﬂd
+, (msg_∑ylﬂd), "˘(%dËlc(%d)", 
+möuãs
+, 
+œ°_check
+);
+
+70 
+	`£nd_msg
+(
+msg_∑ylﬂd
+);
+
+71 
+	}
+}
+
+73 
+	$£nd_thr
+(*
+∑øm
+){
+
+74 
+∑øm
+[0]) {
+
+76 
+	`¢¥ötf
+(
+msg_∑ylﬂd
+, (msg_∑ylﬂd), "thB(%d)",
+SENSE_B_THR
+);
+
+79 
+	`¢¥ötf
+(
+msg_∑ylﬂd
+, (msg_∑ylﬂd), "thC(%d)",
+SENSE_C_THR
+);
+
+82 
+	`¢¥ötf
+(
+msg_∑ylﬂd
+, (msg_∑ylﬂd), "thD(%d)",
+SENSE_D_THR
+);
+
+86 
+	`£nd_msg
+(
+msg_∑ylﬂd
+);
+
+87 
+	}
+}
+
+	@pump_sensor.ino
+
+1 
+	~"deföes.h
+"
+
+4 
+	$£tup_pump_™d_£ns‹
+() {
+
+5 
+	`digôÆWrôe
+(
+BUILTIN_LED
+, 
+HIGH
+);
+
+6 
+	`pöMode
+(
+BUILTIN_LED
+, 
+OUTPUT
+);
+
+8 
+	`digôÆWrôe
+(
+PUMPB
+, 
+HIGH
+);
+
+9 
+	`pöMode
+(
+PUMPB
+, 
+OUTPUT
+);
+
+10 
+	`digôÆWrôe
+(
+PUMPC
+, 
+HIGH
+);
+
+11 
+	`pöMode
+(
+PUMPC
+, 
+OUTPUT
+);
+
+12 
+	`digôÆWrôe
+(
+PUMPD
+, 
+HIGH
+);
+
+13 
+	`pöMode
+(
+PUMPD
+, 
+OUTPUT
+);
+
+15 
+	`pöMode
+(
+S_PWR_A
+, 
+OUTPUT
+);
+
+16 
+	`pöMode
+(
+S_PWR_B
+, 
+OUTPUT
+);
+
+17 
+	`pöMode
+(
+S_PWR_C
+, 
+OUTPUT
+);
+
+18 
+	`pöMode
+(
+S_PWR_D
+, 
+OUTPUT
+);
+
+19 
+	}
+}
+
+21 
+	$pump_£q
+(
+pump
+, 
+sDuøti⁄
+){
+
+22 
+	`digôÆWrôe
+(
+pump
+, 
+LOW
+);
+
+23 
+	`dñay
+(
+sDuøti⁄
+ * 1000);
+
+24 
+	`digôÆWrôe
+(
+pump
+, 
+HIGH
+);
+
+25 
+	}
+}
+
+27 
+	$ªad_humidôy
+(
+£ns‹
+) {
+
+28 
+ãmp
+;
+
+30 
+	`digôÆWrôe
+(
+£ns‹
+, 
+HIGH
+);
+
+31 
+	`dñay
+(500);
+
+32 
+ãmp
+ = 
+	`™ÆogRód
+(0);
+
+33 
+Sîül
+.
+	`¥öt
+("Analog value ");
+
+34 
+Sîül
+.
+	`¥öt
+(
+£ns‹
+);
+
+35 
+Sîül
+.
+	`¥öt
+(": ");
+
+36 
+Sîül
+.
+	`¥öén
+(
+ãmp
+);
+
+37 
+	`digôÆWrôe
+(
+£ns‹
+, 
+LOW
+);
+
+38 
+	`dñay
+(1000);
+
+40  
+ãmp
+;
+
+41 
+	}
+}
+
+43 
+	$úig©e
+(){
+
+44 
+pum≥d
+ = 0;
+
+46 
+Sîül
+.
+	`¥öén
+("starting irigation sequance inner");
+
+48 
+£n£_B_ªad
+ = 
+	`ªad_humidôy
+(
+S_PWR_B
+);
+
+49 i‡(
+£n£_B_ªad
+ > 
+SENSE_B_THR
+) {
+
+50 
+	`pump_£q
+(
+PUMPB
+, 
+PUMP_TIME
+);
+
+51 
+pum≥d
+++;
+
+54 
+£n£_C_ªad
+ = 
+	`ªad_humidôy
+(
+S_PWR_C
+);
+
+55 i‡(
+£n£_C_ªad
+ > 
+SENSE_C_THR
+) {
+
+56 
+	`pump_£q
+(
+PUMPC
+, 
+PUMP_TIME
+);
+
+57 
+pum≥d
+++;
+
+60 
+£n£_D_ªad
+ = 
+	`ªad_humidôy
+(
+S_PWR_D
+);
+
+61 i‡(
+£n£_D_ªad
+ > 
+SENSE_D_THR
+) {
+
+62 
+	`pump_£q
+(
+PUMPD
+, 
+PUMP_TIME
+);
+
+63 
+pum≥d
+++;
+
+66 
+œ°_check
+ = 
+möuãs
+;
+
+68 
+Sîül
+.
+	`¥öt
+("currntÅime: ");
+
+69 
+Sîül
+.
+	`¥öt
+(
+möuãs
+);
+
+70 
+Sîül
+.
+	`¥öt
+("Üast_checkÅime: ");
+
+71 
+Sîül
+.
+	`¥öt
+(
+œ°_check
+);
+
+72 
+Sîül
+.
+	`¥öt
+("Öumped: ");
+
+73 
+Sîül
+.
+	`¥öén
+(
+pum≥d
+);
+
+75  (
+pum≥d
+);
+
+76 
+	}
+}
+
+	@wifi.ino
+
+1 
+	~"deföes.h
+"
+
+3 
+	$£tup_wifi
+() {
+
+4 
+ªåy_cou¡
+ = 0;
+
+6 i‡(
+WiFi
+.
+	`°©us
+(Ë=
+WL_CONNECTED
+)
+
+9 
+	`dñay
+(1000);
+
+11 
+Sîül
+.
+	`¥öén
+();
+
+12 
+Sîül
+.
+	`¥öt
+("ConnectingÅo ");
+
+13 
+Sîül
+.
+	`¥öén
+(
+ssid
+);
+
+15 
+WiFi
+.
+	`begö
+(
+ssid
+, 
+∑ssw‹d
+);
+
+17 (
+WiFi
+.
+	`°©us
+(Ë!
+WL_CONNECTED
+Ë&& ( 
+ªåy_cou¡
+ < 
+RETRY_LIMIT
+ *10 )) {
+
+18 
+	`dñay
+(500);
+
+19 
+Sîül
+.
+	`¥öt
+(".");
+
+20 
+ªåy_cou¡
+++;
+
+23 i‡–
+ªåy_cou¡
+ =
+RETRY_LIMIT
+ ) {
+
+24 
+Sîül
+.
+	`¥öén
+("FailedÅo connectÅo server - working standalone");
+
+26 
+Sîül
+.
+	`¥öén
+("");
+
+27 
+Sîül
+.
+	`¥öén
+("WiFi connected");
+
+28 
+Sîül
+.
+	`¥öén
+("IPáddress: ");
+
+29 
+Sîül
+.
+	`¥öén
+(
+WiFi
+.
+	`loˇlIP
+());
+
+31 
+	}
+}
+
+33 
+boﬁ
+ 
+	$ªc⁄√˘
+–*
+∑øm
+ ) {
+
+34 
+ªåy_cou¡
+ = 0;
+
+35 
+	`£tup_wifi
+();
+
+38 (!
+˛õ¡
+.
+	`c⁄√˘ed
+()Ë&& ( 
+ªåy_cou¡
+++ < 
+RETRY_LIMIT
+ )) {
+
+39 
+˛õ¡
+.
+	`£tSîvî
+(
+mqâ_£rvî
+, 1883);
+
+40 
+˛õ¡
+.
+	`£tCÆlback
+(
+mqâ_ˇŒback
+);
+
+41 
+Sîül
+.
+	`¥öt
+("Attempting MQTT connection...");
+
+43 i‡(
+˛õ¡
+.
+	`c⁄√˘
+("Irigation_kitchen_Client")) {
+
+44 
+Sîül
+.
+	`¥öén
+("connected");
+
+46 
+	`£nd_°©us
+();
+
+48 
+t›ic
+[128];
+
+49 
+	`¢¥ötf
+(
+t›ic
+, —›ic), "%s/#", 
+dev_«me
+);
+
+50 
+˛õ¡
+.
+	`subs¸ibe
+(
+t›ic
+);
+
+51 
+Sîül
+.
+	`¥öt
+(
+t›ic
+);
+
+52 
+c⁄√˘i⁄_°©e
+ = 
+åue
+;
+
+53 
+Sîül
+.
+	`¥öén
+("established connectionÅo broker...");
+
+54 
+timî
+.
+	`evîy
+(5000, 
+check_c⁄√˘i⁄
+);
+
+55  
+åue
+;
+
+57 
+Sîül
+.
+	`¥öt
+("failed,Ñc=");
+
+58 
+Sîül
+.
+	`¥öt
+(
+˛õ¡
+.
+	`°©e
+());
+
+59 
+Sîül
+.
+	`¥öén
+("Åryágain in 1 seconds");
+
+61 
+	`dñay
+(1000);
+
+64 
+Sîül
+.
+	`¥öén
+("failedÅoÉstablish connectionÅo broker...Ñeschedualing in 10 min");
+
+65 
+c⁄√˘i⁄_°©e
+ = 
+Ál£
+;
+
+66 
+timî
+.
+	`ö
+(10 * 60 * 1000, 
+check_c⁄√˘i⁄
+);
+
+67  
+åue
+;
+
+68 
+	}
+}
+
+70 
+	$£nd_msg
+(*
+msg
+) {
+
+71 
+t›ic
+[128];
+
+72 
+	`¢¥ötf
+(
+t›ic
+, —›ic), "%s", 
+dev_«me
+);
+
+73 
+Sîül
+.
+	`¥öt
+("Sending msg onÅopic: ");
+
+74 
+Sîül
+.
+	`¥öén
+(
+t›ic
+);
+
+75 
+Sîül
+.
+	`¥öt
+("msg: ");
+
+76 
+Sîül
+.
+	`¥öén
+(
+msg
+);
+
+77 
+˛õ¡
+.
+	`publish
+(
+t›ic
+, 
+msg
+);
+
+78 
+	}
+}
+
+80 
+	$mqâ_ˇŒback
+(* 
+t›ic
+, 
+byã
+* 
+∑ylﬂd
+, 
+Àngth
+) {
+
+82 * 
+msg
+ = (*)
+	`mÆloc
+((
+Àngth
+ + 1) * ());
+
+83 
+	`°∫˝y
+(
+msg
+, (*)
+∑ylﬂd
+, 
+Àngth
+);
+
+84 
+msg
+[
+Àngth
+] = '\0';
+
+85 *
+p1
+, *
+p2
+, *
+p3
+, *
+i
+;
+
+87 
+Sîül
+.
+	`¥öt
+("Messageárrived [");
+
+88 
+Sîül
+.
+	`¥öt
+(
+t›ic
+);
+
+89 
+Sîül
+.
+	`¥öt
+(" , ");
+
+90 
+Sîül
+.
+	`¥öt
+(
+msg
+);
+
+91 
+Sîül
+.
+	`¥öén
+("]");
+
+93 i‡(
+	`°r°r
+(
+t›ic
+, "STATUS")) {
+
+94 
+Sîül
+.
+	`¥öén
+("recivedá STATUS message");
+
+95 
+	`£nd_°©us
+();
+
+96 } i‡(
+	`°r°r
+(
+t›ic
+, "SET")) {
+
+97 
+p1
+ = 
+	`°πok_r
+(
+msg
+," ",&
+i
+);
+
+98 
+p2
+ = 
+	`°πok_r
+(
+NULL
+," ",&
+i
+);
+
+99 i‡(
+	`°r°r
+(
+p1
+, "TIME")) {
+
+100 
+p3
+ = 
+	`°πok_r
+(
+NULL
+," ",&
+i
+);
+
+101 
+	`upd©e_time
+(
+p2
+, 
+p3
+);
+
+102 } i‡(
+	`°r°r
+(
+p1
+, "THR")) {
+
+103 
+p3
+ = 
+	`°πok_r
+(
+NULL
+," ",&
+i
+);
+
+104 
+	`upd©e_thr
+(
+p2
+, 
+p3
+);
+
+105 } i‡(
+	`°r°r
+(
+p1
+, "CHECK")) {
+
+106 
+p3
+ = 
+	`°πok_r
+(
+NULL
+," ",&
+i
+);
+
+107 
+	`upd©e_check
+(
+p2
+, 
+p3
+);
+
+108 } i‡(
+	`°r°r
+(
+p1
+, "START_REQ")) {
+
+109 
+Sîül
+.
+	`¥öén
+("got update message");
+
+110 
+	`upd©e_°¨t
+();
+
+112 } i‡(
+	`°r°r
+(
+t›ic
+, "GET")) {
+
+113 
+p1
+ = 
+	`°πok_r
+(
+msg
+," ",&
+i
+);
+
+114 
+p2
+ = 
+	`°πok_r
+(
+NULL
+," ",&
+i
+);
+
+115 i‡(
+	`°r°r
+(
+p1
+, "TIME")) {
+
+116 
+	`£nd_time
+();
+
+117 } i‡(
+	`°r°r
+(
+p1
+, "THR")) {
+
+118 
+	`£nd_thr
+(
+p2
+);
+
+121 
+	`‰ì
+(
+msg
+);
+
+122 
+	}
+}
+
+124 
+boﬁ
+ 
+	$check_c⁄√˘i⁄
+( * ) {
+
+125 i‡(!
+˛õ¡
+.
+	`c⁄√˘ed
+()) {
+
+126 
+	`ªc⁄√˘
+–
+NULL
+ );
+
+128 
+˛õ¡
+.
+	`lo›
+();
+
+129 
+	}
+}
+
+	@
+1
+.
+1
+/usr/include
+5
+68
 defines.h
 irigation_main.ino
 mqtt_comm.ino
